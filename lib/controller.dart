@@ -73,10 +73,11 @@ class GoogleMapsController extends ChangeNotifier {
     bool trafficEnabled = false,
     bool zoomGesturesEnabled = true,
     List<Factory<OneSequenceGestureRecognizer>> gestureRecognizers,
-  })  : this.initialCameraPosition = const CameraPosition(
-          target: LatLng(0, 0),
-          zoom: 15,
-        ),
+  })  : this.initialCameraPosition = initialCameraPosition ??
+            const CameraPosition(
+              target: LatLng(0, 0),
+              zoom: 15,
+            ),
         this._circles = initialCircles ?? Set(),
         this._polygons = initialPolygons ?? Set(),
         this._polylines = initialPolylines ?? Set(),
@@ -335,12 +336,12 @@ class GoogleMapsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  removeCircles(Iterable<Marker> circles) {
+  removeCircles(Iterable<Circle> circles) {
     this._circles.removeAll(circles);
     notifyListeners();
   }
 
-  removeCircle(Marker circle) {
+  removeCircle(Circle circle) {
     this._circles.remove(circle);
     notifyListeners();
   }
@@ -358,12 +359,12 @@ class GoogleMapsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  removePolygons(Iterable<Marker> polygons) {
+  removePolygons(Iterable<Polygon> polygons) {
     this._polygons.removeAll(polygons);
     notifyListeners();
   }
 
-  removePolygon(Marker polygon) {
+  removePolygon(Polygon polygon) {
     this._polygons.remove(polygon);
     notifyListeners();
   }
@@ -380,12 +381,12 @@ class GoogleMapsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  removePolylines(Iterable<Marker> polylines) {
+  removePolylines(Iterable<Polyline> polylines) {
     this._polylines.removeAll(polylines);
     notifyListeners();
   }
 
-  removePolyline(Marker polyline) {
+  removePolyline(Polyline polyline) {
     this._polylines.remove(polyline);
     notifyListeners();
   }
