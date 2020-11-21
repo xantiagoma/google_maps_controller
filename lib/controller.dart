@@ -3,6 +3,9 @@ part of google_maps_controller;
 void _voidFunction() {}
 void _voidFunctionOneParameter(dynamic a) {}
 
+/// Wrapper of [GoogleMapController] same interface
+///
+/// Also adds the methods, streams and utilities to interact with the map
 class GoogleMapsController extends ChangeNotifier {
   final CameraPosition initialCameraPosition;
 
@@ -130,11 +133,14 @@ class GoogleMapsController extends ChangeNotifier {
     };
   }
 
+  /// Set [BuildContext] to the controller used to perform some methods over it
   void setContext(BuildContext context) {
     _context = context;
     notifyListeners();
   }
 
+  /// Sets a pure [GoogleMapController] to [GoogleMapsController] for
+  /// custom use or add functionality to pure controller.
   void init(GoogleMapController controller) {
     _googleMapController = controller;
     notifyListeners();

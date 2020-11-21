@@ -1,5 +1,6 @@
 part of google_maps_controller;
 
+/// Wraps [GoogleMap] to add specific logic and delegate it to [GoogleMapsController]
 class GoogleMaps extends StatelessWidget {
   final GoogleMapsController controller;
 

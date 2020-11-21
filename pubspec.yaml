@@ -1,6 +1,6 @@
 name: google_maps_controller
 description: Stateful map controller for Google Maps google_maps_flutter. Manage Markers, Circles, Polylines, and Polygons.
-version: 1.0.0
+version: 1.1.0
 homepage: https://github.com/xantiagoma/google_maps_controller
 
 environment:
@@ -9,8 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_maps_flutter: ^0.5.28+1
-  provider: ^4.1.3
+  google_maps_flutter: ^1.0.6
+  provider: ^4.3.2
 
 dev_dependencies:
   flutter_test:
