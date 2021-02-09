@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         SafeArea(
           top: false,
-          child: Text("$position"),
+          child: Text(position?.toString() ?? 'Move the map'),
         )
       ],
     );
