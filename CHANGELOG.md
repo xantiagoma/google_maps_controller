@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+* Null-safety
+
 ## [1.1.0] - Upgrade dependencies & documentation
 
 * Upgrade to google_maps_flutter: ^1.0.6

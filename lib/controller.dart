@@ -10,12 +10,12 @@ class GoogleMapsController extends ChangeNotifier {
   final CameraPosition initialCameraPosition;
 
   // Events
-  void Function() _onCameraIdle;
-  void Function() _onCameraMoveStarted;
-  void Function(CameraPosition) _onCameraMove;
-  void Function(LatLng) _onLongPress;
-  void Function(LatLng) _onTap;
-  void Function(GoogleMapController) _onMapCreated;
+  late final void Function() _onCameraIdle;
+  late final void Function() _onCameraMoveStarted;
+  late final void Function(CameraPosition) _onCameraMove;
+  late final void Function(LatLng) _onLongPress;
+  late final void Function(LatLng) _onTap;
+  late final void Function(GoogleMapController) _onMapCreated;
 
   // Event getters
   void Function() get onCameraIdle => _onCameraIdle;
@@ -25,8 +25,8 @@ class GoogleMapsController extends ChangeNotifier {
   void Function(LatLng) get onTap => _onTap;
   void Function(GoogleMapController) get onMapCreated => _onMapCreated;
 
-  GoogleMapController _googleMapController;
-  BuildContext _context;
+  GoogleMapController? _googleMapController;
+  BuildContext? _context;
 
   final _onTap$ = StreamController<LatLng>.broadcast();
   Stream<LatLng> get onTap$ => _onTap$.stream;
@@ -53,11 +53,11 @@ class GoogleMapsController extends ChangeNotifier {
     void Function(LatLng) onTap = _voidFunctionOneParameter,
 
     // Initials
-    CameraPosition initialCameraPosition,
-    Set<Circle> initialCircles,
-    Set<Marker> initialMarkers,
-    Set<Polygon> initialPolygons,
-    Set<Polyline> initialPolylines,
+    CameraPosition? initialCameraPosition,
+    Set<Circle>? initialCircles,
+    Set<Marker>? initialMarkers,
+    Set<Polygon>? initialPolygons,
+    Set<Polyline>? initialPolylines,
     bool buildingsEnabled = true,
     CameraTargetBounds cameraTargetBounds = CameraTargetBounds.unbounded,
     bool compassEnabled = true,
@@ -75,7 +75,7 @@ class GoogleMapsController extends ChangeNotifier {
     bool tiltGesturesEnabled = true,
     bool trafficEnabled = false,
     bool zoomGesturesEnabled = true,
-    List<Factory<OneSequenceGestureRecognizer>> gestureRecognizers,
+    List<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers,
   })  : this.initialCameraPosition = initialCameraPosition ??
             const CameraPosition(
               target: LatLng(0, 0),
@@ -101,12 +101,13 @@ class GoogleMapsController extends ChangeNotifier {
         this._scrollGesturesEnabled = scrollGesturesEnabled,
         this._tiltGesturesEnabled = tiltGesturesEnabled,
         this._trafficEnabled = trafficEnabled,
-        this._zoomGesturesEnabled = zoomGesturesEnabled,
-        this._gestureRecognizers = gestureRecognizers ??
+        this._gestureRecognizers = gestureRecognizers?.toSet() ??
             {
               Factory<OneSequenceGestureRecognizer>(
-                  () => EagerGestureRecognizer()),
-            } {
+                () => EagerGestureRecognizer(),
+              ),
+            },
+        this._zoomGesturesEnabled = zoomGesturesEnabled {
     this._onCameraIdle = () {
       _onCameraIdle$.add(null);
       onCameraIdle();
@@ -147,8 +148,8 @@ class GoogleMapsController extends ChangeNotifier {
   }
 
   bool get initted => _googleMapController == null;
-  GoogleMapController get controller => _googleMapController;
-  BuildContext get context => _context;
+  GoogleMapController? get controller => _googleMapController;
+  BuildContext? get context => _context;
 
   Set<Marker> _markers;
   Set<Marker> get markers => _markers;
@@ -399,46 +400,47 @@ class GoogleMapsController extends ChangeNotifier {
 
   // Interactions
 
-  Future<void> animateCamera(CameraUpdate cameraUpdate) =>
-      _googleMapController.animateCamera(cameraUpdate);
+  Future<void> animateCamera(CameraUpdate cameraUpdate) async =>
+      _googleMapController?.animateCamera(cameraUpdate);
 
-  Future<LatLng> getLatLng(ScreenCoordinate screenCoordinate) =>
-      _googleMapController.getLatLng(screenCoordinate);
+  Future<LatLng?> getLatLng(ScreenCoordinate screenCoordinate) async =>
+      _googleMapController?.getLatLng(screenCoordinate);
 
-  Future<ScreenCoordinate> getScreenCoordinate(LatLng latLng) =>
-      _googleMapController.getScreenCoordinate(latLng);
+  Future<ScreenCoordinate?> getScreenCoordinate(LatLng latLng) async =>
+      _googleMapController?.getScreenCoordinate(latLng);
 
-  Future<LatLngBounds> getVisibleRegion() =>
-      _googleMapController.getVisibleRegion();
+  Future<LatLngBounds?> getVisibleRegion() async =>
+      _googleMapController?.getVisibleRegion();
 
-  Future<double> getZoomLevel() => _googleMapController.getZoomLevel();
+  Future<double?> getZoomLevel() async => _googleMapController?.getZoomLevel();
 
-  Future<double> hideMarkerInfoWindow(MarkerId markerId) =>
-      _googleMapController.hideMarkerInfoWindow(markerId);
+  Future<void> hideMarkerInfoWindow(MarkerId markerId) async =>
+      _googleMapController?.hideMarkerInfoWindow(markerId);
 
-  Future<bool> isMarkerInfoWindowShown(MarkerId markerId) =>
-      _googleMapController.isMarkerInfoWindowShown(markerId);
+  Future<bool?> isMarkerInfoWindowShown(MarkerId markerId) async =>
+      _googleMapController?.isMarkerInfoWindowShown(markerId);
 
-  Future<bool> showMarkerInfoWindow(MarkerId markerId) =>
-      _googleMapController.showMarkerInfoWindow(markerId);
+  Future<void> showMarkerInfoWindow(MarkerId markerId) async =>
+      _googleMapController?.showMarkerInfoWindow(markerId);
 
-  Future<Uint8List> takeSnapshot() => _googleMapController.takeSnapshot();
+  Future<Uint8List?> takeSnapshot() async =>
+      _googleMapController?.takeSnapshot();
 
-  Future<void> moveCamera(CameraUpdate cameraUpdate) =>
-      _googleMapController.moveCamera(cameraUpdate);
+  Future<void> moveCamera(CameraUpdate cameraUpdate) async =>
+      _googleMapController?.moveCamera(cameraUpdate);
 
-  Future<void> setMapStyle(String mapStyle) =>
+  Future<void> setMapStyle(String mapStyle) async =>
       _googleMapController?.setMapStyle(mapStyle);
 
-  Future<double> get zoom => _googleMapController.getZoomLevel();
+  Future<double?> get zoom async => _googleMapController?.getZoomLevel();
 
   Future<void> updateCamera(
     CameraUpdate cameraUpdate, {
     bool animate = false,
-  }) =>
+  }) async =>
       animate
-          ? _googleMapController.animateCamera(cameraUpdate)
-          : _googleMapController.moveCamera(cameraUpdate);
+          ? _googleMapController?.animateCamera(cameraUpdate)
+          : _googleMapController?.moveCamera(cameraUpdate);
 
   Future<void> zoomIn({
     bool animate = false,
@@ -458,7 +460,7 @@ class GoogleMapsController extends ChangeNotifier {
 
   Future<void> zoomBy(
     double amount, {
-    Offset focus,
+    Offset? focus,
     bool animate = false,
   }) =>
       updateCamera(CameraUpdate.zoomBy(amount, focus), animate: animate);
@@ -469,8 +471,6 @@ class GoogleMapsController extends ChangeNotifier {
     bool animate = false,
   }) =>
       updateCamera(CameraUpdate.newLatLngZoom(latLng, zoom), animate: animate);
-
-  // TODO: Center
 
   Future<void> newCameraPosition(
     CameraPosition cameraPosition, {

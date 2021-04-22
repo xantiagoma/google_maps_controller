@@ -24,7 +24,7 @@ class ExampleApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -32,9 +32,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final s = "Map 2";
-  GoogleMapsController controller;
-  StreamSubscription<CameraPosition> subscription;
-  CameraPosition position;
+  late final GoogleMapsController controller;
+  late final StreamSubscription<CameraPosition> subscription;
+  CameraPosition? position;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         zoom: 14.4746,
       ),
       onTap: (latlng) {
-        Circle circle;
+        late Circle circle;
         circle = Circle(
           circleId: CircleId(
             "ID:" + DateTime.now().millisecondsSinceEpoch.toString(),

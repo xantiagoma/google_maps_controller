@@ -5,8 +5,8 @@ class GoogleMaps extends StatelessWidget {
   final GoogleMapsController controller;
 
   const GoogleMaps({
-    Key key,
-    @required this.controller,
+    Key? key,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class GoogleMaps extends StatelessWidget {
         builder: (
           BuildContext context,
           GoogleMapsController controller,
-          Widget child,
+          Widget? _,
         ) {
           return GoogleMap(
             // Initialize
